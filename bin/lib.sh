@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 
+guess_libsh_path ()
+{
+    (
+    if ! cd "$(dirname "$0")/../lib" || [ ! -e ./bootstrap.sh ]
+    then
+        echo 1>&2 "Couldn't guess LIBSH_PATH"
+        kill -2 $$
+    fi
+    pwd
+    )
+}
+
 if [ -z "$LIBSH_PATH" ]
 then
-    LIBSH_PATH="$(dirname "$0")/../lib"
+    LIBSH_PATH="$(guess_libsh_path)"
 fi
 
 echo "export LIBSH_PATH='$LIBSH_PATH' ;"
