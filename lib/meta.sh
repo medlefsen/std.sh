@@ -12,7 +12,7 @@ print-func-body ()
     print-func "$func_name" | tail -n +3 | head -n -1
 }
 
-func-copy ()
+copy-func ()
 {
     eval `@args old_name new_name`
     eval "
