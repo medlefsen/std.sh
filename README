@@ -1,8 +1,10 @@
-= lib.sh =
+lib.sh
+======
 
 Bash scripting library
 
-== Usage ==
+Usage
+-----
 
 Install lib.sh someplace on your system and make sure the lib.sh executable is
 in your PATH.
