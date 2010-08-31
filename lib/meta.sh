@@ -3,7 +3,7 @@
 print-func ()
 {
     eval `@args func_name`
-    set | sed -n '/^'"$1"' ()/,/^}/ p'
+    declare -f "$func_name"
 }
 
 print-func-body ()
