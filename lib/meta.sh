@@ -6,6 +6,25 @@ func-exists ()
     declare -F "$func_name" &>/dev/null
 }
 
+# Prints out line\tfile from where the function was sourced
+# returns 1 if function doesn't exist
+func-origin ()
+{
+    eval `@args func_name`
+    declare -F "$func_name" | { 
+        if read func line file
+        then
+            echo "$line$(echo -e '\t')$file"
+        fi
+    }
+}
+
+func-origin-file ()
+{
+    eval `@args $func_name`
+    func-origin "$func_name" | cut -f 2-
+}
+
 func-print ()
 {
     eval `@args func_name`
