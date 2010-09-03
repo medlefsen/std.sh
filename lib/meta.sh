@@ -1,5 +1,11 @@
 #!/bin/false
 
+func-exists ()
+{
+    eval `@args func_name`
+    declare -F "$func_name" &>/dev/null
+}
+
 func-print ()
 {
     eval `@args func_name`
