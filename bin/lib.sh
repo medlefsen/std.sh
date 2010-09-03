@@ -2,8 +2,13 @@
 
 guess_libsh_path ()
 {
+    local rpath="$0"
+    while [ -h "$rpath" ]
+    do
+        rpath="$(readlink "$rpath")"
+    done
     (
-    if ! cd "$(dirname "$0")/../lib" || [ ! -e ./bootstrap.sh ]
+    if [ ! -e "$rpath" ] || ! cd "$(dirname "$rpath")/../lib" || [ ! -e ./bootstrap.sh ]
     then
         echo 1>&2 "Couldn't guess LIBSH_PATH"
         kill -2 $$
