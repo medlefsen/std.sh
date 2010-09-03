@@ -1,18 +1,18 @@
 #!/bin/false
 
-print-func ()
+func-print ()
 {
     eval `@args func_name`
     declare -f "$func_name"
 }
 
-print-func-body ()
+func-print-body ()
 {
     eval `@args func_name`
     print-func "$func_name" | tail -n +3 | head -n -1
 }
 
-copy-func ()
+func-copy ()
 {
     eval `@args old_name new_name`
     eval "
