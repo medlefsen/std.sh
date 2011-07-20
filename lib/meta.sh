@@ -34,7 +34,7 @@ func-print ()
 func-print-body ()
 {
     eval `@args func_name`
-    print-func "$func_name" | tail -n +3 | head -n -1
+    func-print "$func_name" | tail -n +3 | head -n -1
 }
 
 func-copy ()
@@ -43,7 +43,7 @@ func-copy ()
     eval "
 function $new_name
 {
-    $(print-func-body "$old_name")
+    $(func-print-body "$old_name")
 }"
 }
 
