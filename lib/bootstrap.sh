@@ -1,5 +1,8 @@
 #!/bin/false
 
+set -o functrace
+set -o errtrace
+shopt -s expand_aliases
 shopt -s extdebug
 
 export LIBSH_LOADED=1
