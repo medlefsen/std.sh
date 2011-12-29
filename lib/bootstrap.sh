@@ -1,6 +1,8 @@
 #!/bin/false
 
 shopt -s extdebug
+
+export LIBSH_LOADED=1
 declare -A LIBSH_LIBRARIES
 
 _libsh_is_int ()
