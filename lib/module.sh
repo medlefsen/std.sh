@@ -1,8 +1,13 @@
 #!/bin/false
 
+module ()
+{
+    @args library
+}
+
 use ()
 {
-    eval `@args library`
+    @args library
     if [ "${#LIBSH_LIBRARIES[@]}" -eq 0 ]
     then
         declare -A LIBSH_LIBRARIES

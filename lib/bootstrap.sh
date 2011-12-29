@@ -38,7 +38,13 @@ _libsh_load_library ()
     fi
 }
 
-_libsh_load_library use
+# Temporary use() until real one is defined
+use()
+{
+    _libsh_load_library "$@"
+}
+
 _libsh_load_library args
 _libsh_load_library log
 _libsh_load_library error
+_libsh_load_library module
