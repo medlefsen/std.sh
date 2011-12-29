@@ -2,6 +2,6 @@
 
 log ()
 {
-    eval `@args level msg`
+    @args level msg
     echo -n  "$level: $msg"  | fmt -t 1>&2
 }

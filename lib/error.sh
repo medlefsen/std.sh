@@ -2,7 +2,7 @@
 
 throw ()
 {
-    eval `@args`
+    @args
     if [ "$BASH_SUBSHELL" -eq 0 ] && is-interactive
     then
         kill -2 $$
@@ -13,13 +13,13 @@ throw ()
 
 error ()
 {
-    eval `@args msg`
+    @args msg
     log err "$msg"
     throw
 }
 
 warn ()
 {
-    eval `@args msg`
+    @args msg
     log warn "$msg"
 }
