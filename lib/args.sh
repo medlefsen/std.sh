@@ -10,11 +10,12 @@ args ()
     echo -n "local argv=( \"\$@\" )"
     while [ "$#" -ne 0 ]
     do
-        if [ "$#" -eq 1 ] && [ "$1" == "..." ]
+        if [ "$#" -eq 1 ] && [ "${1: -3}" == "..." ]
         then
             arg_cmp="-lt"
+            echo -n " ${1%...}=( \"\${@: $i }\" )"
         else
-            echo -n " \"$1=\$$i\""
+            echo -n " $1=\"\$$i\""
             let ++i
         fi
         shift
