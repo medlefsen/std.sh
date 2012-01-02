@@ -31,6 +31,12 @@ func-print ()
     declare -f "$func_name"
 }
 
+func-list ()
+{
+    @args 
+    declare -F | sed 's/^declare -f //' | sort
+}
+
 func-print-body ()
 {
     @args func_name
