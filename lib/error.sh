@@ -1,4 +1,8 @@
 #!/bin/false
+use eval
+use args
+use log
+use meta
 
 throw ()
 {
@@ -23,3 +27,26 @@ warn ()
     @args msg
     log warn "$msg"
 }
+
+require ()
+{
+    @args msg cmd...
+    if eval?
+    then
+        echo if ! "${cmd[@]}"
+        echo then
+        echo '  error' "'$msg'" 
+        echo fi 
+    else
+        eval "$(as-eval require "${argv[@]}")"
+    fi
+}
+
+assert ()
+{
+    @args cmd...
+    echo "@require 'Assertion failed: ${cmd[*]}' '${cmd[@]}'"
+}
+
+evalify require
+evalify assert
