@@ -2,9 +2,9 @@
 
 if [ -n "$LIBSH_DEBUG" ]
 then
-    _LIBSH_EVAL_PREFIX='eval "CMD='\''$(_LIBSH_IS_EVAL=1 $_LIBSH_EVAL_CMD)'\''; echo \"\$CMD\"; eval \$CMD #"'
+    _LIBSH_EVAL_PREFIX='eval "CMD='\''$(eval "_LIBSH_IN_EVAL=1 $_LIBSH_EVAL_CMD")'\''; echo \"\$CMD\"; eval \$CMD #"'
 else
-    _LIBSH_EVAL_PREFIX='eval "$(_LIBSH_IS_EVAL=1 $_LIBSH_EVAL_CMD) #" '
+    _LIBSH_EVAL_PREFIX='eval "$(eval "_LIBSH_IN_EVAL=1 $_LIBSH_EVAL_CMD") #" '
 fi
 
 _LIBSH_EVAL_PREFIX_LENGTH="${#_LIBSH_EVAL_PREFIX}"
