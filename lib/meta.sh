@@ -1,4 +1,5 @@
 #!/bin/false
+use args
 
 func-exists ()
 {
