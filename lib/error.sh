@@ -1,5 +1,5 @@
 #!/bin/false
-use eval
+use macro
 use args
 use log
 use meta
@@ -31,14 +31,14 @@ warn ()
 require ()
 {
     @args msg cmd...
-    if eval?
+    if macro?
     then
         echo if ! "${cmd[@]}"
         echo then
         echo '  error' "'$msg'" 
         echo fi 
     else
-        eval "$(as-eval require "${argv[@]}")"
+        eval "$(as-macro require "${argv[@]}")"
     fi
 }
 
@@ -48,5 +48,5 @@ assert ()
     echo "@require 'Assertion failed: ${cmd[*]}' '${cmd[@]}'"
 }
 
-evalify require
-evalify assert
+macroify require
+macroify assert

@@ -1,5 +1,5 @@
 #!/bin/false
-use eval
+use macro
 use error
 
 # Allows simple arg parsing
@@ -29,4 +29,4 @@ then
 fi
 END
 }
-evalify args
+macroify args

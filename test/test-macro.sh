@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 eval `lib.sh`
+use macro
 
 test-func()
 {
     echo 'local numargs=$#'
     echo 'local funcname="$FUNCNAME"'
 }
-evalify test-func
+macroify test-func
 
 main()
 {

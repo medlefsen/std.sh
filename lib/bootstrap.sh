@@ -27,7 +27,7 @@ error ()
     exit 1
 }
 
-evalify ()
+macroify ()
 {
     :
 }
@@ -47,7 +47,7 @@ _libsh_load_library ()
 
 _libsh_load_library log
 _libsh_load_library error
-_libsh_load_library eval
+_libsh_load_library macro
 _libsh_load_library args
 _libsh_load_library module
 
