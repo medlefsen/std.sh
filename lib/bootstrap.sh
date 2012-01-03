@@ -12,23 +12,24 @@ then
 fi
 declare -A LIBSH_LIBRARIES
 
-_libsh_is_int ()
+
+# Temporary mock functions until real ones are defined
+alias @args=:
+
+use ()
 {
-    case "$_" in
-        *i*) return 0 ;;
-          *) return 1 ;;
-     esac
+    :
 }
 
-_libsh_error ()
+error ()
 {
-    echo 1>&2 "$@"
-    if [ "$BASH_SUBSHELL" -eq 0 ] && _libsh_is_int
-    then
-        kill -2 $$
-    else
-        exit 1
-    fi
+    echo "$@"
+    exit 1
+}
+
+evalify ()
+{
+    :
 }
 
 # Stripped down version of "use" for required libs
@@ -38,17 +39,19 @@ _libsh_load_library ()
     LIBSH_LIBRARIES["$library"]="$libpath"
     if ! source "$libpath"
     then
-        _libsh_error "Couldn't load library $libpath"
+        error "Couldn't load library $libpath"
     fi
+
 }
 
-# Temporary use() until real one is defined
-use()
-{
-    _libsh_load_library "$@"
-}
 
-_libsh_load_library args
 _libsh_load_library log
 _libsh_load_library error
+_libsh_load_library eval
+_libsh_load_library args
 _libsh_load_library module
+
+# Reload log and error to use real versions of eval, args, and use
+_libsh_load_library log
+_libsh_load_library error
+
