@@ -6,7 +6,7 @@ shopt -s expand_aliases
 shopt -s extdebug
 
 export LIBSH_LOADED=1
-if [ -n "$1" ]
+if [ -z "$LIBSH_PATH" ]
 then
     export LIBSH_PATH="$1"
 fi
