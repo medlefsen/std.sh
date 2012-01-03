@@ -1,5 +1,6 @@
 #!/bin/false
 use eval
+use error
 
 # Allows simple arg parsing
 args ()
@@ -24,8 +25,7 @@ args ()
     cat <<END
 if [ \$# $arg_cmp $(( i - 1 )) ];
 then
-    echo "Usage: \$FUNCNAME ${argv[*]}";
-    exit 1;
+    error "Usage: \$FUNCNAME ${argv[*]}";
 fi
 END
 }
