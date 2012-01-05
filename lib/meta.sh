@@ -64,7 +64,7 @@ func-rename()
 is-interactive ()
 {
     @args
-    case "$_" in
+    case "$-" in
         *i*) return 0 ;;
           *) return 1 ;;
      esac
