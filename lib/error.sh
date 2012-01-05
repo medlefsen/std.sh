@@ -38,7 +38,7 @@ require ()
         echo '  error' "'$msg'" 
         echo fi 
     else
-        eval "$(as-macro require "${argv[@]}")"
+        @macro require "${argv[@]}"
     fi
 }
 
