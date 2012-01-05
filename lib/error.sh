@@ -7,7 +7,7 @@ use meta
 throw ()
 {
     @args
-    if [ "$BASH_SUBSHELL" -eq 0 ] && is-interactive
+    if [ "$BASH_SUBSHELL" -eq 0 ] && interactive?
     then
         kill -2 $$
     else

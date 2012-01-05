@@ -61,7 +61,7 @@ func-rename()
     unset "$old_name"
 }
 
-is-interactive ()
+interactive? ()
 {
     @args
     case "$-" in
