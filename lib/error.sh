@@ -33,7 +33,7 @@ require ()
     @args msg cmd...
     if macro?
     then
-        echo if ! "${cmd[@]}"
+        echo if ! "$(printf '%q ' "${cmd[@]}")"
         echo then
         echo '  error' "'$msg'" 
         echo fi 
@@ -45,7 +45,7 @@ require ()
 assert ()
 {
     @args cmd...
-    echo "@require 'Assertion failed: ${cmd[*]}' '${cmd[@]}'"
+    echo "@require 'Assertion failed: $(macro-command)' $(printf '%q ' "${cmd[@]}")"
 }
 
 macroify require
