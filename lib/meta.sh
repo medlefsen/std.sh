@@ -61,6 +61,11 @@ func-rename()
     unset "$old_name"
 }
 
+list-variables ()
+{
+    declare 2>/dev/null | sed -n --posix '/=/ {p;b}; q' | sort -t =
+}
+
 interactive? ()
 {
     @args
