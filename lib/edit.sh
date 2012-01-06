@@ -15,7 +15,7 @@ editor()
     echo -n "${editor[@]}"  "$@"
 }
 
-evalify editor
+macroify editor
 
 edit()
 {
