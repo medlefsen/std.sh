@@ -1,7 +1,7 @@
 # @macro [ expr ... ] == eval "$(expr)"
 
-alias @macro='_libsh_MACRO_COMMAND="${BASH_COMMAND/*#_libsh_MACRO_START\'\''}" eval '\''eval "$(eval "$_libsh_MACRO_COMMAND")" #_libsh_MACRO_START'\'
-alias @macro-print='_libsh_MACRO_COMMAND="${BASH_COMMAND/*#_libsh_MACRO_START\'\''}" eval '\''echo "$(eval "$_libsh_MACRO_COMMAND")" #_libsh_MACRO_START'\'
+alias @macro='_libsh_MACRO_COMMAND="${BASH_COMMAND#*#\'\''}" eval '\''eval "$(eval "$_libsh_MACRO_COMMAND")" #'\'
+alias @macro-print='_libsh_MACRO_COMMAND="${BASH_COMMAND#*#\'\''}" eval '\''echo "$(eval "$_libsh_MACRO_COMMAND")" #'\'
 
 macro-command ()
 {
