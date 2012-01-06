@@ -22,7 +22,7 @@ func-origin ()
 
 func-origin-file ()
 {
-    @args $func_name
+    @args func_name
     func-origin "$func_name" | cut -f 2-
 }
 
