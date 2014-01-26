@@ -4,25 +4,27 @@ eval `lib.sh`
 
 use msgbus
 
-val="$(echo "hi"; msgbus-send "hello world")"
+@msgbus bus
+
+val="$(echo "hi"; msgbus-send "$bus" "hello world")"
 
 echo "$val=hi"
-msg="$(msgbus-recv)"
+msg="$(msgbus-recv "$bus")"
 echo "$msg=hello world"
 
 
 PIDS=()
-msgbus-send "hello world" &
+msgbus-send "$bus" "hello world" &
 PIDS+=("$!")
-echo "$(msgbus-recv)" &
+echo "$(msgbus-recv "$bus")" &
 PIDS+=("$!")
-msgbus-send "hello world" &
+msgbus-send "$bus" "hello world" &
 PIDS+=("$!")
-msgbus-send "hello world" &
+msgbus-send "$bus" "hello world" &
 PIDS+=("$!")
-echo "$(msgbus-recv)" &
+echo "$(msgbus-recv "$bus")" &
 PIDS+=("$!")
-echo "$(msgbus-recv)" &
+echo "$(msgbus-recv "$bus")" &
 PIDS+=("$!")
 
 for PID in "${PIDS[@]}"
