@@ -2,7 +2,7 @@
 
 use args
 
-command-exists?() {
+function command-exists? {
   command -v "$@" &> /dev/null
   return "$?"
 }
