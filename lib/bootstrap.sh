@@ -14,9 +14,9 @@ declare -A LIBSH_LIBRARIES
 
 # Load essential libraries
 # General approach is to have libraries assume full environment
-# and use mocks and other tricks to bootstrap them
+# and use fakes and other tricks to bootstrap them
 
-# Temporary mock functions until real ones are defined
+# Temporary fake functions until real ones are defined
 alias @args='@macro args'
 
 use ()
@@ -48,15 +48,18 @@ _libsh_load_library ()
 }
 
 
+# Load libraries necessary for module
 _libsh_load_library log
 _libsh_load_library meta
 _libsh_load_library error
 _libsh_load_library macro
 _libsh_load_library args
+
 _libsh_load_library module
 
-# Reload some libraries to use real versions of macro, args, and use
-_libsh_load_library macro
+# Reload libraries to use real versions of macro, args, and use
 _libsh_load_library log
+_libsh_load_library meta
 _libsh_load_library error
-
+_libsh_load_library macro
+_libsh_load_library args
