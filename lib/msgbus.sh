@@ -2,45 +2,28 @@
 
 use args
 use sys
+use macro
 
-msgbus-daemon() {
-  # Try to pick files that are unique and always around.
-  # On systems with /proc, us that, otherwise use temp files
-  if [ -f "/proc/$$" ]
-  then
-    local rlock="/proc/$$"
-  else
-    local rlock=`mktemp`
-  fi
-  if [ -f "/proc/$$/cmdline" ]
-  then
-    local rlock="/proc/$$/cmdline"
-  else
-    local rlock=`mktemp`
-  fi
-  local wlock=`mktemp`
-  trap -- "rm -f '$rlock' '$wlock'" EXIT
-  
-  msgbus-format-msg "$rlock"
-  msgbus-format-msg "$wlock"
-  cat
+msgbus() {
+  @args varname
+  echo 'declare -a '"$varname;"
+  echo "$varname"'[1]="$(mktemp -u)"; mkfifo "${'"$varname"'[1]}";'
+  echo "$varname"'[2]="$(mktemp)";'
+  echo 'exec {'"$varname"'}<>"${'"$varname"'[1]}";'
+  echo 'rm "${'"$varname"'[1]}";'
+  echo "$varname"'[1]="${'"$varname"'}";'
+  echo 'exec {'"$varname"'}<>"${'"$varname"'[2]}";'
+  echo 'rm "${'"$varname"'[2]}";'
+  echo "$varname"'[2]="${'"$varname"'}";'
+  echo "$varname"'="${'"$varname"'[1]}:${'"$varname"'[2]}";'
 }
+macroify msgbus
 
-msgbus-init() {
-  if [ -z "$_lib_sh_MSGBUS_PID" ]
-  then
-    coproc msgbus-daemon
-
-    exec {_lib_sh_MSGBUS_IN}>&${COPROC[1]}
-    eval "exec ${COPROC[1]}>&-"
-    exec {_lib_sh_MSGBUS_OUT}<&${COPROC[0]}
-    eval "exec ${COPROC[0]}<&-"
-    _lib_sh_MSGBUS_PID="$COPROC_PID"
-    _lib_sh_MSGBUS_RLOCK="$(msgbus-parse-msg <&$_lib_sh_MSGBUS_OUT)"
-    _lib_sh_MSGBUS_WLOCK="$(msgbus-parse-msg <&$_lib_sh_MSGBUS_OUT)"
-
-    unset COPROC
-  fi
+msgbus-destroy() {
+  @args msgbus
+  local bus="${msgbus%:*}" readlock="${msgbus#*:}"
+  exec {bus}<&-  
+  exec {readlock}<&-  
 }
 
 msgbus-format-msg() {
@@ -56,21 +39,20 @@ msgbus-parse-msg() {
 }
 
 msgbus-send() {
-  @args msg
-  msgbus-init
-  (
-    file-lock 22
-    msgbus-format-msg "$msg" >&$_lib_sh_MSGBUS_IN
-  ) 22<$_lib_sh_MSGBUS_WLOCK
+  @args msgbus msgs...
+  local bus="${msgbus%:*}"
+  for msg in "${msgs[@]}"
+  do
+    file-lock "$bus"
+    msgbus-format-msg "$msg" >&"$bus"
+    file-unlock "$bus"
+  done
 }
 
 msgbus-recv() {
-  msgbus-init
-  (
-    file-lock 22
-    msgbus-parse-msg <&$_lib_sh_MSGBUS_OUT
-  ) 22<$_lib_sh_MSGBUS_RLOCK
+  @args msgbus
+  local bus="${msgbus%:*}" readlock="${msgbus#*:}"
+  file-lock "$readlock"
+  msgbus-parse-msg <&"$bus"
+  file-unlock "$readlock"
 }
-
-msgbus-init
-
