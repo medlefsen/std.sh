@@ -5,12 +5,12 @@ set -o errtrace
 shopt -s expand_aliases
 shopt -s extdebug
 
-export LIBSH_LOADED=1
-if [ -z "$LIBSH_PATH" ]
+export STDSH_LOADED=1
+if [ -z "$STDSH_PATH" ]
 then
-    export LIBSH_PATH="$1"
+    export STDSH_PATH="$1"
 fi
-declare -A LIBSH_LIBRARIES
+declare -A STDSH_LIBRARIES
 
 # Load essential libraries
 # General approach is to have libraries assume full environment
@@ -36,10 +36,10 @@ macroify ()
 }
 
 # Stripped down version of "use" for required libs
-_libsh_load_library ()
+_stdsh_load_library ()
 {
-    local library="$1" libpath="$LIBSH_PATH/${1}.sh"
-    LIBSH_LIBRARIES["$library"]="$libpath"
+    local library="$1" libpath="$STDSH_PATH/lib/${1}.sh"
+    STDSH_LIBRARIES["$library"]="$libpath"
     if ! source "$libpath"
     then
         error "Couldn't load library $libpath"
@@ -49,17 +49,17 @@ _libsh_load_library ()
 
 
 # Load libraries necessary for module
-_libsh_load_library log
-_libsh_load_library meta
-_libsh_load_library error
-_libsh_load_library macro
-_libsh_load_library args
+_stdsh_load_library log
+_stdsh_load_library meta
+_stdsh_load_library error
+_stdsh_load_library macro
+_stdsh_load_library args
 
-_libsh_load_library module
+_stdsh_load_library module
 
 # Reload libraries to use real versions of macro, args, and use
-_libsh_load_library log
-_libsh_load_library meta
-_libsh_load_library error
-_libsh_load_library macro
-_libsh_load_library args
+_stdsh_load_library log
+_stdsh_load_library meta
+_stdsh_load_library error
+_stdsh_load_library macro
+_stdsh_load_library args
